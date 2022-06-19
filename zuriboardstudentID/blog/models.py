@@ -1,10 +1,13 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Post(models.Model):
-    Title = models.CharField(max_length= 200)
-    Text = models.TextField
-    Author = models.ForeignKey
-    Created_date = models.DateTimeField
-    Published_date = models.DateTimeField
+    title = models.CharField(max_length= 200)
+    text = models.TextField()
+    author = models.ForeignKey(User, related_name="author", on_delete=models.CASCADE)
+    created_date = models.DateTimeField(auto_now_add=True)
+    published_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
