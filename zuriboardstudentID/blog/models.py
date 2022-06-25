@@ -1,4 +1,4 @@
-from django.contrib.auth.models import get_user_model
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 from django.template.defaultfilters import slugify
@@ -16,7 +16,7 @@ class Post(models.Model):
     title = models.CharField(max_length= 250)
     slug = models.SlugField(max_length=300, unique=True, editable=False)
     author = models.ForeignKey(
-        get_user_model(), blank=True, null=True, related_name="blog_posts", on_delete=models.CASCADE
+        get_user_model(), related_name="blog_posts", on_delete=models.CASCADE
     )
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
