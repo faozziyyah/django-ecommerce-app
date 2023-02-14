@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<header class="" id="profileheader">
+
+    <img src="{{user_profile.profileimg.url}}" alt="">
+
+    <form action="/follow" method="POST">
+        {% csrf_token %}
+
+        <div class="add-btn">
+
+            <span style="font-size: 27px; margin-right: 520px;">
+                <b><a style="color: white; text-decoration: none;" href="/index">Home</a></b>
+            </span>
+            
+            {% if user_post_length == 0 %}
+            <span style="color: white; font-size: 20px; margin-right: 20px;">
+                <b>No Post</b>
+            </span>
+            {% elif user_post_length == 1 %}
+            <span style="color: white; font-size: 20px; margin-right: 20px;">
+                <b>{{user_post_length}} Post</b>
+            </span>
+            {% else %}
+            <span style="color: white; font-size: 20px; margin-right: 20px;">
+                <b>{{user_post_length}} Posts</b>
+            </span>
+            {% endif %}
+
+            {% if user_followers == 0 or user_followers == 1 %}
+            <span style="color: white; font-size: 20px; margin-right: 20px;">
+                <b>{{user_followers}} follower</b>
+            </span>
+            {% else %}
+            <span style="color: white; font-size: 20px; margin-right: 20px;">
+                <b>{{user_followers}} followers</b>
+            </span>
+            {% endif %}
+
+            <span style="color: white; font-size: 20px; margin-right: 20px;">
+                <b>{{user_following}} following</b>
+            </span>
+
+            <input type="hidden" value="{{user.username}}" name="follower" />
+            <input type="hidden" value="{{user_object.username}}" name="user" />
+            
+            {% if user_object.username == user.username %}
+            <a href="{% url 'settings' %}" class="button is-danger"  style="padding: 5px; border-radius: 3px; border: #ffc0cb; text-decoration: none;">Account Settings</a>
+            {% else %}
+            <a data-ripple="">
+                <button type="submit" class="button is-primary is-light">{{button_text}}</button>
+            </a>
+            {% endif %}
+        </div>
+
+    </form>
+
+</header>
+
+<article id="article">
+
+    <aside id="aside">
+        <h3 style="color: black; text-transform: capitalize; font-size: 27px; font-weight: bold;">{{user_profile.user.username}}</h3>
+
+        <p> <b>Email:</b> {{user_profile.email}}</p>
+        <p> <b>Location:</b> {{user_profile.location}}</p>
+
+    </aside>
+
+    <h1 style="text-transform: uppercase; font-size: 25px; text-align: center; font-weight: bold; color: #46436d; margin-top: 1em;">Posts Created...</h1>	
+
+</article>
+{% endblock %}

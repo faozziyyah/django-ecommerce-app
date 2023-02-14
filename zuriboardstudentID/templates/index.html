@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1 style="text-transform: uppercase; font-size: 20px; text-align: center; font-weight: bold; color: #46436d; margin-top: 1em; margin-bottom: 1em;">Products Available...</h1>
+
+    <div class="columns">
+
+        {% for product in product_list %}
+
+            <div class="column">
+
+              <div class="card" id="card">
+
+                <header class="card-header" id="header">
+                    
+                    <b>{{ product.name }}</b>
+                    <b>${{ product.price }}</b>
+                
+                </header>
+        
+                <div class="card-image">
+                    <figure class="image is-5by3">
+                        <img src="{{product.image.url}}" alt="Placeholder image">
+                    </figure>
+                </div>    
+        
+                <footer class="card-footer">
+        
+                    <p class="card-footer-item">
+                      <span> 
+                        <a href="" class="icon is-small"> <i class="fa fa-eye" aria-hidden="true"></i> </a>
+                        View product
+                      </span>
+                    </p>
+        
+                    <p class="card-footer-item">
+                      <span> 
+                        <a href="" class="icon is-small"> <i class="fas fa-heart" aria-hidden="true"></i> </a>
+                            {% if post.no_of_likes == 0 %}
+                                0 like
+                                {% elif post.no_of_likes == 1 %}
+                                {{post.no_of_likes}} like
+                                {% else %}
+                                {{post.no_of_likes}} likes
+                            {% endif %}
+                      </span>
+                    </p>
+                    
+                    <p class="card-footer-item">
+                        <span> 
+                          <a href="" class="icon is-small"> <i class="fa fa-comment" aria-hidden="true"></i> </a>
+                          Add To Cart
+                        </span>
+                      </p>
+                </footer>
+        
+            </div>
+              
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

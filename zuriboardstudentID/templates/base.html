@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <script src="https://kit.fontawesome.com/1cbee15c00.js" crossorigin="anonymous"></script>
+
+    <title>Edublog</title>
+
+    <style>
+
+#profileheader {		
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('../static/images/tree.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 400px;
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    text-align: center;
+    padding: 1em;
+    margin-top: 1em;
+}
+
+#profileheader > img {
+    align-self: flex-end;
+    height: 200px;
+    width: 15%;
+    box-shadow: 5px 5px 5px black;
+}
+
+#profileheader form {
+    align-self: flex-end;
+}
+
+#head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+}
+
+li{
+    list-style-type: none;
+}
+
+#article {
+    background-color: #e0dfdf;
+    display: flex;
+    flex-direction: column;
+}
+
+#aside, #article > h1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+
+#section {
+    background-color: transparent;
+    box-shadow: 5px 5px 5px 5px black;
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: auto;
+    margin-bottom: 2em;
+    margin-top: 1em;
+}
+
+.nava{
+    color: white;
+}
+
+.d-flex, #headers, #header{
+    display: flex;
+    justify-content: space-between;
+}
+
+#carddetail, #card, #searchtable{
+    width: 50%;
+    margin: auto;
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
+#hero, #approval {
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2em;
+}
+
+#hero > img {
+    width: 40%;
+}
+
+#footer{
+    background-color: #485fc7;
+    color: #fff;
+    padding: 1em;
+}
+
+#footer .column{
+    text-align: center;
+}
+
+#footer a{
+    text-decoration: none;
+    color: #fff;
+}
+
+#loginform{
+    margin-bottom: 8em;
+}
+
+.pagination{
+    width: 50%;
+    margin: auto;
+    margin-top: 2em;
+    margin-bottom: 5em;
+}
+
+.pagination a{
+    border: 1px solid blue;
+    color: blue;
+}
+
+#cart{
+    margin-bottom: 10em;
+    margin-top: 2em;
+}
+
+#checkout-main{
+    display: flex;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 10em;
+    margin-top: 2em;
+    padding: 1em;
+    justify-content: space-between;
+}
+
+.checkout-row > input{
+    width: 45%;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.checkout-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.checkout-child{
+    width: 45%;
+    margin: auto;
+}
+
+#tableimage, #change-cart{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.tablep{
+    margin-top: 1em;
+}
+
+@media screen and (max-width: 600px){
+
+    #searchtable{
+        width: 80%;
+    }
+
+    #checkout-main{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .checkout-child{
+        width: 100%;
+        margin: auto;
+    }
+
+    #backtocart, #tabimage{
+        display: none;
+    }
+
+    td{
+        font-size: 12px;
+        font-weight: 500;
+    }
+    
+    #header {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+    }
+
+    #header > img {
+        align-self: center;
+        width: 50%;
+        border-radius: 50%;
+        box-shadow: 5px 5px 5px black;
+    }
+
+    #header form {
+        width: 90%;
+        align-self: center;
+        text-align: center;
+    }
+
+    #section, #settings{
+        width: 90%;
+    }
+
+    .nava{
+        color: black;
+    }
+
+    #hero {
+        flex-direction: column;
+    }
+
+    #hero > img {
+        width: 80%;
+        margin-top: 2em;
+    }
+    
+}
+        
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar is-link" role="navigation" aria-label="main navigation">
+
+            <div class="navbar-brand">
+                <a class="navbar-item" href="{% url 'index' %}">
+                    <img src="{% static 'images/logo.png' %}" width="" height="">
+                </a>
+          
+                <a role="button" class="navbar-burger is-active" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                </a>
+            </div>
+          
+            <div id="navbarBasicExample" class="navbar-menu is-active">
+
+                <div class="navbar-start">
+
+                    <div class="navbar-item">
+                        <a href="{% url 'index' %}" class="nava"><i class="fas fa-home"></i> Home </a>
+                    </div>
+
+                    <div class="navbar-item">
+                        <a href="{% url 'cart' %}" class="nava"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart </a>
+                    </div>
+            
+                    <div class="navbar-item has-dropdown is-hoverable">    
+                        <a class="navbar-link"><i class="fa fa-info-circle" aria-hidden="true"></i> More </a>
+            
+                        <div class="navbar-dropdown">    
+                            <a class="navbar-item" href="{% url 'cart' %}"><i class="fa fa-info-circle" aria-hidden="true"></i> About </a>
+                            <a href="{% url 'cart' %}" class="navbar-item"> <i class="fa fa-address-card"></i> Contact </a>    
+                            <hr class="navbar-divider">    
+                            <a class="navbar-item"> Report an issue </a>
+                        </div>
+
+                    </div>
+
+                </div>
+          
+                <div class="navbar-end"> 
+
+                    <form class="navbar-item" method="POST" action="{% url 'index' %}">
+                        {% csrf_token %}
+        
+                        <div class="field has-addons">
+
+                            <div class="control">
+                              <input class="input" type="search" style="background-color: transparent;" placeholder="Search posts..." aria-label="Search" name="searched" />
+                            </div>
+
+                            <div class="control">
+                              <button class="button is-primary" type="submit"> Search </button>
+                            </div>
+
+                        </div>
+                        
+                    </form>
+
+                    <div class="navbar-item"> 
+
+                        <div class="buttons"> 
+
+                            {% if user.is_superuser %}
+
+                                <a class="navbar-item button is-success is-light" href="{% url 'index' %}">
+                                    <span class="icon">
+                                        <i class="fa fa-user-circle"></i>
+                                    </span>
+                                    <span>Admin</span>
+                                </a>
+
+                            {% endif %}
+
+                            {% if user.is_authenticated %}
+
+                                <div class="navbar-item has-dropdown is-hoverable">    
+                                    <a class="navbar-link">
+                                        <img src="{{index}}" class="header-avatar" style="width: 32px; height: 32px; border-radius: 100%; margin-left: 15px;">
+                                    </a>
+                        
+                                    <div class="navbar-dropdown">
+
+                                        <a class="navbar-item button is-primary is-light" href="{% url 'settings' %}">
+                                            <span class="icon">
+                                                <i class="fa fa-cog" aria-hidden="true"></i>
+                                            </span>
+                                            <span>Account settings</span>
+                                        </a>
+
+                                        <a class="navbar-item button is-link is-light" href="profile/{{user_profile.user}}">
+                                            <span class="icon">
+                                                <i class="fa fa-user-circle"></i>
+                                            </span>
+                                            <span>Profile</span>
+                                        </a>
+
+                                        <hr class="navbar-divider">    
+
+                                        <a class="navbar-item button is-warning is-light" href="{% url 'logout' %}">
+                                            <span class="icon">
+                                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                            </span>
+                                            <span>Log Out</span>
+                                        </a> 
+
+                                    </div>
+            
+                                </div>  
+
+                            {% else %}
+
+                                <a class="navbar-item button is-primary is-light" href="{% url 'register' %}">
+                                    <span class="icon">
+                                        <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                    </span>
+                                    <span>Sign up</span>
+                                </a>
+    
+                                <a class="navbar-item button is-light is-light" href="{% url 'login' %}">
+                                    <span class="icon">
+                                        <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                    </span>
+                                    <span>Log in</span>
+                                </a> 
+
+                            {% endif %}  
+
+                        </div>    
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+      </header>
+
+{% block content %}
+{% endblock content %}
+
+
+<footer class="columns" id="footer">
+
+    <div class="column">
+        <h5>Links</h5>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'cart' %}">About</a>
+            <a href="{% url 'checkout' %}">Contact</a>
+    </div>
+    </div>
+
+    <div class="column">
+
+        <a class="button is-success" href="http://www.facebook.com/profile.php?id="><i class="fab fa-facebook"></i></a>
+        <a class="button is-primary" href="http://www.linkedin.com/in/"><i class="fab fa-linkedin"></i></a>
+        <a class="button is-link" href="http://twitter.com/"><i class="fab fa-twitter"></i></a>
+        <a class="button is-danger" href="http://youtube.com/"><i class="fab fa-youtube"></i></a>
+        <a class="button is-warning" href="mailto:"><i class="fas fa-envelope"></i></a>
+
+    </div>
+    
+    <div class="column">
+        <p>© All rights reserved {{ current_year }} Faozziyyah Daud</p>
+    </div>
+
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    
+    // Add a click event on each of them
+    $navbarBurgers.forEach( el => {
+      el.addEventListener('click', () => {
+    
+        // Get the target from the "data-target" attribute
+        const target = el.dataset.target;
+        const $target = document.getElementById(target);
+    
+        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+        el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+    
+      });
+    });
+    
+    });
+</script>
+
+</body>
+
+</html>

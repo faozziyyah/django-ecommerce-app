@@ -1,13 +1,13 @@
 from django.urls import path
 from . import views
 
-app_name = "blog"
-
 urlpatterns = [
-    path("", views.PostListView.as_view(), name="all"),
-    path("create/", views.PostCreateView.as_view(), name="post_create"),
-    path("delete/<slug:slug>", views.PostDeleteView.as_view(), name="post_delete"),
-    path("update/<slug:slug>", views.PostUpdateView.as_view(), name="post_update"),
-    path("read/<slug:slug>", views.PostDetailView.as_view(), name="post_detail"),
-
+    path('', views.signin, name='login'),
+    path('index', views.index, name='index'),
+    path('profile/<str:pk>', views.profile, name='profile'),
+    path('settings', views.settings, name='settings'),
+    path('signup', views.signup, name='register'),
+    path('logout', views.logout, name='logout'),
+    path('cart/', views.cart, name='cart'),
+    path('checkout/', views.checkout, name='checkout'),
 ]

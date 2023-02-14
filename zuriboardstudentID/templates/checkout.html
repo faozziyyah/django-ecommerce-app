@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="checkout-main">
+
+    <form id="" class="checkout-child box">
+
+        <div class="checkout-row">
+
+            <input class="input is-link" type="text" placeholder="Name">
+            <input class="input is-link" type="email" placeholder="Email">
+
+        </div>
+
+        <h1 class="has-text-weight-bold">Shipping Information</h1>
+
+        <div class="checkout-row">
+
+            <input class="input is-link" type="text" placeholder="Address">
+            <input class="input is-link" type="text" placeholder="City">
+
+        </div>
+
+        <div class="checkout-row">
+
+            <input class="input is-link" type="text" placeholder="State">
+            <input class="input is-link" type="number" placeholder="Zip Code">
+
+        </div>
+
+        <div class="checkout-row">
+
+            <input class="input is-link" type="number" placeholder="Zip Code">
+        </div>
+
+        <button style="width: 100%;" class=" button is-success">Continue</button>
+      
+    </form>
+
+    <div id="checkoutchild" class="checkout-child box">
+
+        <h1 class="has-text-weight-bold">Order Summary</h1>
+
+        <nav class="level is-mobile box">
+
+            <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading has-text-weight-bold">no of Items</p>
+                  <p class="title">{{order.get_cart_items}}</p>
+                </div>
+            </div>
+
+            <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading has-text-weight-bold">Total price</p>
+                  <p class="title"># {{order.get_cart_total}}</p>
+                </div>
+            </div>
+
+            <div class="level-item has-text-centered has-text-weight-bold" id="backtocart">
+                <a class="button is-link is-light" href="{% url 'cart' %}">Back to Cart</a>
+            </div>
+
+        </nav>
+
+        <table class="table is-fullwidth">
+    
+            <thead>
+              <tr>
+                <th><p class="has-text-centered is-uppercase has-text-weight-bold">Item</p></th>
+                <th><p class="has-text-centered is-uppercase has-text-weight-bold">Price</p></th>
+                <th><p class="has-text-centered is-uppercase has-text-weight-bold">Quantity</p></th>
+                <th><p class="has-text-centered is-uppercase has-text-weight-bold">Total</p></th>
+              </tr>
+            </thead>
+    
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td id="tableimage" class="">
+                        <img id="tabimage" src="{{ item.product.image.url }}" class="image is-64x64" />
+                        <p class="has-text-centered has-text-weight-medium">{{ item.product.name }}</p>
+                    </td>
+    
+                    <td>
+                        <p class="has-text-centered has-text-weight-medium">#{{ item.product.price }}</p>
+                    </td>
+    
+                    <td>
+                        <p class="has-text-centered has-text-weight-medium">{{ item.quantity }}</p>
+                        
+                    </td>
+    
+                    <td><p class="has-text-centered has-text-weight-medium">#{{item.get_total}}</p></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    
+        </table>
+
+      
+    </div>
+
+</div>
+
+{% endblock %}

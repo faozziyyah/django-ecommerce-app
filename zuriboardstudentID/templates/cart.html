@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div id="cart" class="container box">
+
+    <nav class="level is-mobile box">
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading has-text-weight-bold">no of Items</p>
+            <p class="title">{{order.get_cart_items}}</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading has-text-weight-bold">Total price</p>
+            <p class="title"># {{order.get_cart_total}}</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered has-text-weight-bold">
+            <a class="button is-link is-light" href="{% url 'checkout' %}">Checkout</a>
+        </div>
+      </nav>
+
+    <table class="table is-fullwidth">
+
+        <thead>
+          <tr>
+            <th><p class="has-text-centered is-uppercase has-text-weight-bold">Item</p></th>
+            <th><p class="has-text-centered is-uppercase has-text-weight-bold">Price</p></th>
+            <th><p class="has-text-centered is-uppercase has-text-weight-bold">Quantity</p></th>
+            <th><p class="has-text-centered is-uppercase has-text-weight-bold">Total</p></th>
+          </tr>
+        </thead>
+
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td id="tableimage" class="">
+                    <img src="{{ item.product.image.url }}" class="image is-64x64" />
+                    <p class="has-text-centered has-text-weight-medium">{{ item.product.name }}</p>
+                </td>
+
+                <td>
+                    <p class="has-text-centered has-text-weight-medium tablep">#{{ item.product.price }}</p>
+                </td>
+
+                <td id="change-cart">
+                    <p class="has-text-weight-medium">{{ item.quantity }}</p>
+                    <p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
+                    <p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+                    
+                    
+                </td>
+
+                <td><p class="has-text-centered has-text-weight-medium tablep">#{{item.get_total}}</p></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+{% endblock %}
