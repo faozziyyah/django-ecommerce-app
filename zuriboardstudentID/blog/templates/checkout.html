@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="checkout-main">
+
+    <form id="form" class="checkout-child box">
+
+        <div class="checkout-row" id="user-info">
+
+            <input class="input is-link" type="text" name="name" placeholder="Name">
+            <input class="input is-link" type="email" name="email" placeholder="Email">
+
+        </div>
+
+        <h1 class="has-text-weight-bold shippinginfo">Shipping Information</h1>
+
+        <div class="checkout-row shippinginfo">
+
+            <input class="input is-link" type="text" name="address" placeholder="Address">
+            <input class="input is-link" type="text" name="city" placeholder="City">
+
+        </div>
+
+        <div class="checkout-row shippinginfo">
+
+            <input class="input is-link" type="text" name="state" placeholder="State">
+            <input class="input is-link" type="number" name="zip" placeholder="Zip Code">
+
+        </div>
+
+        <div class="checkout-row shippinginfo">
+
+            <input class="input is-link" type="number" name="zip" placeholder="Zip Code">
+        </div>
+
+        <button style="width: 100%;" class=" button is-success" id="form-button">Continue</button>
+      
+    </form>
+
+    
+    <div class="hidden" id="payment-info">
+        <small>Paypal options</small>
+        <button id="make-payment"> Make payment </button>
+    </div>
+
+    <div id="checkoutchild" class="checkout-child box">
+
+        <h1 class="has-text-weight-bold">Order Summary</h1>
+
+        <nav class="level is-mobile box">
+
+            <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading has-text-weight-bold">no of Items</p>
+                  <p class="title">{{order.get_cart_items}}</p>
+                </div>
+            </div>
+
+            <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading has-text-weight-bold">Total price</p>
+                  <p class="title"># {{order.get_cart_total}}</p>
+                </div>
+            </div>
+
+            <div class="level-item has-text-centered has-text-weight-bold" id="backtocart">
+                <a class="button is-link is-light" href="{% url 'cart' %}">Back to Cart</a>
+            </div>
+
+        </nav>
+
+        <table class="table is-fullwidth">
+    
+            <thead>
+              <tr>
+                <th><p class="has-text-centered is-uppercase has-text-weight-bold">Item</p></th>
+                <th><p class="has-text-centered is-uppercase has-text-weight-bold">Price</p></th>
+                <th><p class="has-text-centered is-uppercase has-text-weight-bold">Quantity</p></th>
+                <th><p class="has-text-centered is-uppercase has-text-weight-bold">Total</p></th>
+              </tr>
+            </thead>
+    
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td id="tableimage" class="">
+                        <img id="tabimage" src="{{ item.product.image.url }}" class="image is-64x64" />
+                        <p class="has-text-centered has-text-weight-medium">{{ item.product.name }}</p>
+                    </td>
+    
+                    <td>
+                        <p class="has-text-centered has-text-weight-medium">#{{ item.product.price }}</p>
+                    </td>
+    
+                    <td>
+                        <p class="has-text-centered has-text-weight-medium">{{ item.quantity }}</p>
+                        
+                    </td>
+    
+                    <td><p class="has-text-centered has-text-weight-medium">#{{item.get_total}}</p></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    
+        </table>
+
+      
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    var shipping = '{{order.shipping}}';
+    var total = '{{order.get_cart_total}}'
+
+    if (shipping == 'False'){
+        document.getElementsByClassName('shippinginfo').innerHTML = ''
+    }
+
+    if (user != 'AnonymousUser'){
+        document.getElementById('user-info').innerHTML = ''
+    }
+    if (shipping == 'False' && user != 'AnonymousUser'){
+        document.getElementById('form').classList.add('hidden');
+        document.getElementById('payment-info').classList.remove('hidden');
+    }
+
+    var form = document.getElementById('form')
+    form.addEventListener('submit', function(e) {
+        e.preventDefault()
+        console.log('Form submitted')
+        document.getElementById('form-button').classList.add("hidden")
+        document.getElementById('payment-info').classList.remove("hidden")
+    })
+ 
+    document.getElementById('make-payment').addEventListener("click", function(e) {
+        submitFormData()
+    })
+
+    function submitFormData() {
+        console.log('button clicked')
+        var userFormData = {
+            'name': null,
+            'email': null,
+            'total': total,
+        }
+
+        var shippingInfo = {
+            'address': null,
+            'state': null,
+            'city': null,
+            'zip': null,
+        }
+
+        if (shipping != 'False'){
+            shippingInfo.address = form.address.value
+            shippingInfo.city = form.city.value
+            shippingInfo.state = form.state.value
+            shippingInfo.zip = form.zip.value
+        }
+
+        if (user == 'AnonymousUser'){
+            userFormData.name = form.name.value
+            userFormData.email = form.email.value
+        }
+
+        console.log('Shipping info: ',shippingInfo)
+        console.log('User info: ',userFormData)
+
+        var url = '/process_order/'
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({'form': userFormData, 'shipping': shippingInfo}),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('success:', data);
+            alert('Transaction completed');
+            window.location.href = "{% url 'index' %}"
+        })
+    }
+    
+
+</script>
+
+{% endblock %}

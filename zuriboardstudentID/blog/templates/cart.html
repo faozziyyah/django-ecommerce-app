@@ -48,8 +48,12 @@
 
                 <td id="change-cart">
                     <p class="has-text-weight-medium">{{ item.quantity }}</p>
-                    <p><i class="fa fa-chevron-up" aria-hidden="true"></i></p>
-                    <p><i class="fa fa-chevron-down" aria-hidden="true"></i></p>
+                    <p>
+                      <i data-product="{{ item.product.id }}" data-action="add" class="fa fa-chevron-up updatecart" aria-hidden="true"></i>
+                    </p>
+                    <p>
+                      <i data-product="{{ item.product.id }}" data-action="remove" class="fa fa-chevron-down updatecart"  class="fa fa-chevron-down" aria-hidden="true"></i>
+                    </p>
                     
                     
                 </td>

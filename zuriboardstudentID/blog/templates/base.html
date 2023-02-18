@@ -8,240 +8,32 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <script type="text/javascript">
+        var user = '{{request.user}}';
+
+        function getToken(name){
+        var cookieValue = null
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getToken('csrftoken');
+        
+    </script>
+
     <script src="https://kit.fontawesome.com/1cbee15c00.js" crossorigin="anonymous"></script>
 
     <title>Edublog</title>
 
-    <style>
-
-#profileheader {		
-    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('../static/images/tree.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 400px;
-    display: flex;
-    margin: auto;
-    justify-content: space-between;
-    text-align: center;
-    padding: 1em;
-    margin-top: 1em;
-}
-
-#profileheader > img {
-    align-self: flex-end;
-    height: 200px;
-    width: 15%;
-    box-shadow: 5px 5px 5px black;
-}
-
-#profileheader form {
-    align-self: flex-end;
-}
-
-#head{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1em;
-}
-
-li{
-    list-style-type: none;
-}
-
-#article {
-    background-color: #e0dfdf;
-    display: flex;
-    flex-direction: column;
-}
-
-#aside, #article > h1{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 80%;
-    margin: auto;
-}
-
-#section {
-    background-color: transparent;
-    box-shadow: 5px 5px 5px 5px black;
-    display: flex;
-    justify-content: space-between;
-    width: 60%;
-    margin: auto;
-    margin-bottom: 2em;
-    margin-top: 1em;
-}
-
-.nava{
-    color: white;
-}
-
-.d-flex, #headers, #header{
-    display: flex;
-    justify-content: space-between;
-}
-
-#carddetail, #card, #searchtable{
-    width: 50%;
-    margin: auto;
-    margin-top: 1em;
-    margin-bottom: 2em;
-}
-#hero, #approval {
-    display: flex;
-    margin: auto;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2em;
-}
-
-#hero > img {
-    width: 40%;
-}
-
-#footer{
-    background-color: #485fc7;
-    color: #fff;
-    padding: 1em;
-}
-
-#footer .column{
-    text-align: center;
-}
-
-#footer a{
-    text-decoration: none;
-    color: #fff;
-}
-
-#loginform{
-    margin-bottom: 8em;
-}
-
-.pagination{
-    width: 50%;
-    margin: auto;
-    margin-top: 2em;
-    margin-bottom: 5em;
-}
-
-.pagination a{
-    border: 1px solid blue;
-    color: blue;
-}
-
-#cart{
-    margin-bottom: 10em;
-    margin-top: 2em;
-}
-
-#checkout-main{
-    display: flex;
-    width: 100%;
-    margin: auto;
-    margin-bottom: 10em;
-    margin-top: 2em;
-    padding: 1em;
-    justify-content: space-between;
-}
-
-.checkout-row > input{
-    width: 45%;
-    margin-bottom: 1em;
-    margin-top: 1em;
-}
-
-.checkout-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.checkout-child{
-    width: 45%;
-    margin: auto;
-}
-
-#tableimage, #change-cart{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.tablep{
-    margin-top: 1em;
-}
-
-@media screen and (max-width: 600px){
-
-    #searchtable{
-        width: 80%;
-    }
-
-    #checkout-main{
-        display: flex;
-        flex-direction: column;
-    }
-
-    .checkout-child{
-        width: 100%;
-        margin: auto;
-    }
-
-    #backtocart, #tabimage{
-        display: none;
-    }
-
-    td{
-        font-size: 12px;
-        font-weight: 500;
-    }
-    
-    #header {
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    justify-content: center;
-    }
-
-    #header > img {
-        align-self: center;
-        width: 50%;
-        border-radius: 50%;
-        box-shadow: 5px 5px 5px black;
-    }
-
-    #header form {
-        width: 90%;
-        align-self: center;
-        text-align: center;
-    }
-
-    #section, #settings{
-        width: 90%;
-    }
-
-    .nava{
-        color: black;
-    }
-
-    #hero {
-        flex-direction: column;
-    }
-
-    #hero > img {
-        width: 80%;
-        margin-top: 2em;
-    }
-    
-}
-        
-    </style>
 </head>
 
 <body>
@@ -272,6 +64,7 @@ li{
 
                     <div class="navbar-item">
                         <a href="{% url 'cart' %}" class="nava"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart </a>
+                        <p id="cattotal">{{ cartItems }}</p>
                     </div>
             
                     <div class="navbar-item has-dropdown is-hoverable">    
@@ -437,6 +230,7 @@ li{
     
     });
 </script>
+<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 
 </body>
 
