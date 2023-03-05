@@ -1,169 +1,3 @@
-/*#header {		
-    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('../static/images/tree.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 400px;
-    display: flex;
-    margin: auto;
-    justify-content: space-between;
-    text-align: center;
-    padding: 1em;
-    margin-top: 1em;
-}
-
-#header > img {
-    align-self: flex-end;
-    height: 200px;
-    width: 15%;
-    box-shadow: 5px 5px 5px black;
-}
-
-#header form {
-    align-self: flex-end;
-}
-
-#head{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1em;
-}
-
-li{
-    list-style-type: none;
-}
-
-#article {
-    background-color: #e0dfdf;
-    display: flex;
-    flex-direction: column;
-}
-
-#aside, #article > h1{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 80%;
-    margin: auto;
-}
-
-#section {
-    background-color: transparent;
-    box-shadow: 5px 5px 5px 5px black;
-    display: flex;
-    justify-content: space-between;
-    width: 60%;
-    margin: auto;
-    margin-bottom: 2em;
-    margin-top: 1em;
-}
-
-.nava{
-    color: white;
-}
-
-.d-flex, #headers{
-    display: flex;
-    justify-content: space-between;
-}
-
-#carddetail, #card, #searchtable{
-    width: 50%;
-    margin: auto;
-    margin-top: 1em;
-    margin-bottom: 2em;
-}
-#hero, #approval {
-    display: flex;
-    margin: auto;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2em;
-}
-
-#hero > img {
-    width: 40%;
-}
-
-#footer{
-    background-color: #485fc7;
-    color: #fff;
-    padding: 1em;
-}
-
-#footer .column{
-    text-align: center;
-}
-
-#footer a{
-    text-decoration: none;
-    color: #fff;
-}
-
-#loginform{
-    margin-bottom: 8em;
-}
-
-.pagination{
-    width: 50%;
-    margin: auto;
-    margin-top: 2em;
-    margin-bottom: 5em;
-}
-
-.pagination a{
-    border: 1px solid blue;
-    color: blue;
-}
-
-@media screen and (max-width: 600px){
-
-    #searchtable{
-        width: 80%;
-    }
-    
-    #header {
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    justify-content: center;
-    }
-
-    #header > img {
-        align-self: center;
-        width: 50%;
-        border-radius: 50%;
-        box-shadow: 5px 5px 5px black;
-    }
-
-    #header form {
-        width: 90%;
-        align-self: center;
-        text-align: center;
-    }
-
-    #section, #settings{
-        width: 90%;
-    }
-
-    .nava{
-        color: black;
-    }
-
-    #hero {
-        flex-direction: column;
-    }
-
-    #hero > img {
-        width: 80%;
-        margin-top: 2em;
-    }
-    
-}*/
-
 
 #profileheader {		
     background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('../images/tree.jpg');
@@ -231,12 +65,12 @@ li{
     color: white;
 }
 
-.d-flex, #headers, #header{
+.d-flex, #headers{
     display: flex;
     justify-content: space-between;
 }
 
-#carddetail, #card, #searchtable{
+#carddetail, #searchtable{
     width: 50%;
     margin: auto;
     margin-top: 1em;
@@ -355,21 +189,13 @@ li{
         font-size: 12px;
         font-weight: 500;
     }
-    
-    #header {
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    justify-content: center;
-    }
 
-    #header > img {
+    /*#header > img {
         align-self: center;
         width: 50%;
         border-radius: 50%;
         box-shadow: 5px 5px 5px black;
-    }
+    } */
 
     #header form {
         width: 90%;

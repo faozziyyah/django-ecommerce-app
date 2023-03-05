@@ -27,6 +27,26 @@
         return cookieValue;
     }
     var csrftoken = getToken('csrftoken');
+
+    function getCookie(name) {
+        var cookieArr = document.cookie.split(";");
+
+        for (var i = 0; i < cookieArr.length; i++) {
+            var cookiePair = cookieArr[i].split("=");
+
+            if(name == cookiePair[0].trim()) {
+                return decodeURIComponent(cookiePair[i]);
+            }
+        }
+        return null;
+    }
+    var cart = JSON.parse(getCookie('cart'))
+    if(cart == undefined) {
+        cart = {};
+        console.log("cart created");
+        document.cookie = 'carts' + JSON.stringify(cart) + ';domain=;path=/';
+    }
+    console.log('cart:', cart);
         
     </script>
 
@@ -44,7 +64,7 @@
 
             <div class="navbar-brand">
                 <a class="navbar-item" href="{% url 'index' %}">
-                    <img src="{% static 'images/logo.png' %}" width="" height="">
+                    <img src="{% static 'images/EMS.svg' %}" width="" height="">
                 </a>
           
                 <a role="button" class="navbar-burger is-active" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -83,13 +103,13 @@
           
                 <div class="navbar-end"> 
 
-                    <form class="navbar-item" method="POST" action="{% url 'index' %}">
+                    <form class="navbar-item" method="POST" action="{% url 'search-product' %}">
                         {% csrf_token %}
         
                         <div class="field has-addons">
 
                             <div class="control">
-                              <input class="input" type="search" style="background-color: transparent;" placeholder="Search posts..." aria-label="Search" name="searched" />
+                              <input class="input" type="search" style="background-color: transparent;" placeholder="Search Products..." aria-label="Search" name="searched" />
                             </div>
 
                             <div class="control">

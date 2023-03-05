@@ -1,22 +1,22 @@
 var addtocartbtns = document.getElementsByClassName('updatecart')
 
 for (i = 0; i < addtocartbtns.length; i++) {
-    addtocartbtns[i].addEventListener('click', function (){
+    addtocartbtns[i].addEventListener('click', function (e){
         var productId = this.dataset.product
         var action = this.dataset.action
-        console.log('productId:', productId, 'action:', action)
 
+        
         console.log('USER:', user)
         if (user == 'AnonymousUser') {
-            console.log('User is not authenticated')
+            alert('User is not authenticated')
         } else {
+            e.preventDefault();
             updateUserOrder(productId, action)
         }
     })
 }
 
 function updateUserOrder(productId, action){
-    console.log('Updating order')
 
     var url = '/add_to_cart/'
 

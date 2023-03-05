@@ -20,6 +20,8 @@
         </div>
         <div class="level-item has-text-centered has-text-weight-bold">
             <a class="button is-link is-light" href="{% url 'checkout' %}">Checkout</a>
+            <a href="{% url 'delete-cart' order.id %}" class="button is-danger is-light"> Clear Cart
+            </a>
         </div>
       </nav>
 
@@ -58,7 +60,12 @@
                     
                 </td>
 
-                <td><p class="has-text-centered has-text-weight-medium tablep">#{{item.get_total}}</p></td>
+                <td>
+                  <p class="has-text-centered has-text-weight-medium tablep">#{{item.get_total}}</p>               
+                  <a href="{% url 'delete-cart' order.id %}" class="button is-danger is-light"> 
+                    <i class="fa fa-comment" aria-hidden="true"></i> Delete
+                  </a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

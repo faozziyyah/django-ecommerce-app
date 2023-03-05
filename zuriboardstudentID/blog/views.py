@@ -9,7 +9,7 @@ from datetime import datetime
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from .forms import ProductForm
-from .models import Customer, Product, Order, OrderItem, ShippingAddress
+from .models import Customer, Product, Order, OrderItem, ShippingAddress, LikeProduct, Category
 
 # Create your views here.
 # login
@@ -85,7 +85,7 @@ def index(request, year=datetime.now().year, month=datetime.now().strftime('%B')
     now = datetime.now()
     current_year = now.year
 
-    p = Paginator(Product.objects.all().order_by('-created_at'), 2)
+    p = Paginator(Product.objects.all().order_by('-created_at'), 6)
     page = request.GET.get('page')
     products = p.get_page(page)
     nums = "a" * products.paginator.num_pages
@@ -94,6 +94,7 @@ def index(request, year=datetime.now().year, month=datetime.now().strftime('%B')
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     items = order.orderitem_set.all()
     cartItems = order.get_cart_items
+    categorys = Category.objects.all()
 
     user_object = User.objects.get(username=request.user.username)
     user_profile = Customer.objects.get(user=user_object)
@@ -101,7 +102,7 @@ def index(request, year=datetime.now().year, month=datetime.now().strftime('%B')
     product_list = Product.objects.all().order_by('-created_at')
 
     context = {'cartItems': cartItems, 'user_profile': user_profile, 'product_list': product_list, 
-               'products': products, 'nums': nums, "current_year": current_year,
+               'products': products, 'nums': nums, "current_year": current_year, 'categorys': categorys,
               }
 
     return render(request, 'index.html', context)
@@ -143,6 +144,13 @@ def cart(request):
     context = {'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'cart.html', context)
 
+# delete post
+@login_required(login_url='login_user')
+def delete_cart(request, order_id):
+    order = OrderItem.objects.get(pk=order_id)
+    order.delete()
+
+    return redirect('cart')
 
 def checkout(request):
     customer = request.user.customer
@@ -223,3 +231,54 @@ def processOrder(request):
         )
     
     return JsonResponse('Payment complete', safe=False)
+
+# show individual product
+@login_required(login_url='login_user')
+def show_product(request, product_id):
+    product = Product.objects.get(pk=product_id)
+
+    return render(request, 'productdetails.html', {'product': product})
+
+# like product
+@login_required(login_url='login_user')
+def like_product(request):
+    username = request.user.username
+    product_id = request.GET.get('product_id')
+
+    product = Product.objects.get(id=product_id)
+
+    like_filter = LikeProduct.objects.filter(product_id=product_id, username=username).first()
+
+    if like_filter == None:
+        new_like = LikeProduct.objects.create(product_id=product_id, username=username)
+        new_like.save()
+        product.no_of_likes = product.no_of_likes+1
+        product.save()
+        return redirect('index')
+    else:
+        like_filter.delete()
+        product.no_of_likes = product.no_of_likes-1
+        product.save()
+        return redirect('index')
+
+# search product
+def search_product(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        products = Product.objects.filter(name__contains=searched)
+
+        return render(request, 'search.html', {'searched': searched, 'products': products})
+    else:
+        return render(request, 'search.html', {})    
+# show category
+def show_category(request, category_id):
+    #user_profile = Profile.objects.get(user=request.user)
+    category = Category.objects.get(pk=category_id)
+    category_products = Product.objects.filter(category__in=[category])
+
+    context = {
+        'category_products': category_products,
+        'category': category,
+    }
+    return render(request, 'about.html', context)
+

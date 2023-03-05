@@ -87,3 +87,10 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
+
+class LikeProduct(models.Model):
+    product_id = models.CharField(max_length=500)
+    username = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.username

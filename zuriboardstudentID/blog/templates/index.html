@@ -1,67 +1,121 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
 
-    <h1 style="text-transform: uppercase; font-size: 20px; text-align: center; font-weight: bold; color: #46436d; margin-top: 1em; margin-bottom: 1em;">Products Available...</h1>
+<section style="margin-bottom: 8em;">
 
-    <div class="columns">
+  <div class="second">
+    <h2 class="" style="text-transform: uppercase; font-size: 20px; text-align: center; font-weight: bold; color: #46436d; margin-top: 1em; margin-bottom: 1em;">Categories</h2>
 
-        {% for product in product_list %}
+    <section style="display: flex; justify-content: space-around; align-items: center; width: 100%;">
 
-            <div class="column">
+      {% for category in categorys %}
+      <div style="display: flex; justify-content: space-between; align-items: center; text-align: center; width: 20%;">
 
-              <div class="card" id="card">
+        <a href="{% url 'show-category' category.id %}">
+            <img src="{{category.image.url}}" class="" style="width: 32px; height: 32px; border-radius: 100%; margin-left: 15px;">
+        </a>
 
-                <header class="card-header" id="header">
-                    
-                    <b>{{ product.name }}</b>
-                    <b>${{ product.price }}</b>
-                
-                </header>
-        
-                <div class="card-image">
-                    <figure class="image is-5by3">
-                        <img src="{{product.image.url}}" alt="Placeholder image">
-                    </figure>
-                </div>    
-        
-                <footer class="card-footer">
-        
-                    <p class="card-footer-item">
-                      <span> 
-                        <a href="" class="icon is-small"> <i class="fa fa-eye" aria-hidden="true"></i> </a>
-                        View product
-                      </span>
-                    </p>
-        
-                    <p class="card-footer-item">
-                      <span> 
-                        <a href="" class="icon is-small"> <i class="fas fa-heart" aria-hidden="true"></i> </a>
-                            {% if post.no_of_likes == 0 %}
-                                0 like
-                                {% elif post.no_of_likes == 1 %}
-                                {{post.no_of_likes}} like
-                                {% else %}
-                                {{post.no_of_likes}} likes
-                            {% endif %}
-                      </span>
-                    </p>
-                    
-                    <p class="card-footer-item">
-                        <span> 
-                          <button type="button" data-product={{product.id}} data-action="add" class="button is-primary updatecart"> 
-                            <i class="fa fa-comment" aria-hidden="true"></i> Add To Cart
-                          </button>
-                        </span>
-                      </p>
-                </footer>
-        
-            </div>
+        <a href="{% url 'show-category' category.id %}" style="text-decoration: none; color: black;">
+          <span class="block capitalize font-semibold"> {{category.name}} </span> 
+        </a>
+
+      </div> 
+      {% endfor %}
+
+    </section>
+
+</div>
+  
+  <h1 style="text-transform: uppercase; font-size: 20px; text-align: center; font-weight: bold; color: #46436d; margin-top: 1em; margin-bottom: 1em;">Products Available...</h1>
+
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 1/8em; align-items: center; width: 85%; margin: auto;">
+
+      {% for product in product_list %}
+
+          <div style="margin-top: 1em;">
+
+            <div class="card">
+
+              <header class="card-header" id="header" style="height: 50px; padding: 1em; display: flex; justify-content: space-between;">
+                  
+                  <b><a  href="{% url 'show-product' product.id %}">{{ product.name }}</a></b>
+                  <b>${{ product.price }}</b>
               
-            </div>
+              </header>
+      
+              <div class="card-image">
+                  <figure class="image is-5by3">
+                      <img src="{{product.image.url}}" alt="Placeholder image">
+                  </figure>
+              </div>    
+      
+              <footer class="card-footer">
+      
+                  <p class="card-footer-item">
+                    <span id="prodadd"> 
+                      <button type="button" data-product={{product.id}} data-action="add" class="button is-primary is-light updatecart"> 
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To Cart
+                      </button>
+                    </span>
+                  </p>
+      
+                  <p class="card-footer-item">
+                    <span> 
+                      <a href="/like-product?product_id={{product.id}}" class="icon is-small"> <i class="fas fa-heart" aria-hidden="true"></i> </a>
+                          {% if product.no_of_likes == 0 %}
+                              0 like
+                              {% elif product.no_of_likes == 1 %}
+                              {{product.no_of_likes}} like
+                              {% else %}
+                              {{product.no_of_likes}} likes
+                          {% endif %}
+                    </span>
+                  </p>
+                  
+                  <p class="card-footer-item">
+                      <span id="prodremove">
+                        <button type="button" data-product={{product.id}} data-action="remove" class="button is-danger is-light updatecart"> 
+                          <i class="fa fa-comment" aria-hidden="true"></i> Remove
+                        </button>
+                      </span>
+                    </p>
+              </footer>
+      
+          </div>
+            
+          </div>
 
-        {% endfor %}
+      {% endfor %}
 
-    </div>
+  </div>
+</section>
+
+<nav class="pagination is-centered" role="navigation" aria-label="pagination">
+
+  {% if products.has_previous %}
+  <a class="pagination-previous" href="?page=1">&laquo; First</a>
+  <a class="pagination-previous" href="?page={{ products.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <ul class="pagination-list">
+      {% for i in nums %}
+    <li>
+      <a class="pagination-link" aria-label="Goto page 1" href="?page={{ forloop.counter }}">
+          {{ forloop.counter }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  
+  {% if products.has_next %}
+  <a class="pagination-next" href="?page={{ products.next_page_number }}">Next page</a>
+  <a class="pagination-next" href="?page={{ products.paginator.num_pages }}">Last &raquo;</a>
+  {% endif %}
+
+</nav>
 
 {% endblock %}
