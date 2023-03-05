@@ -18,7 +18,9 @@
 
   <h1 style="text-transform: uppercase; font-size: 20px; text-align: center; font-weight: bold; color: #46436d; margin-top: 1em; margin-bottom: 1em;">Products In Category {{category.user}}...</h1>
 
-  {% for product in category_products %}
+  <section  style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 1/8em; align-items: center; width: 85%; margin: auto;">
+
+    {% for product in products %}
   {% if product.approved %}
   <div class="card" style="width: 40%; margin: auto;">
 
@@ -54,6 +56,33 @@
   </div>
   <br />
   {% endif %}
-{% endfor %}
+  {% endfor %}
+
+  </section>
+
+  <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+
+    {% if products.has_previous %}
+    <a class="pagination-previous" href="?page=1">&laquo; First</a>
+    <a class="pagination-previous" href="?page={{ products.previous_page_number }}">Previous</a>
+    {% endif %}
+  
+    <ul class="pagination-list">
+        {% for i in nums %}
+      <li>
+        <a class="pagination-link" aria-label="Goto page 1" href="?page={{ forloop.counter }}">
+            {{ forloop.counter }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  
+    
+    {% if products.has_next %}
+    <a class="pagination-next" href="?page={{ products.next_page_number }}">Next page</a>
+    <a class="pagination-next" href="?page={{ products.paginator.num_pages }}">Last &raquo;</a>
+    {% endif %}
+  
+  </nav>
 
 {% endblock %}

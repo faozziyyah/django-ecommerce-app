@@ -33,7 +33,7 @@
 
   <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 1/8em; align-items: center; width: 85%; margin: auto;">
 
-      {% for product in product_list %}
+      {% for product in products %}
 
           <div style="margin-top: 1em;">
 
@@ -78,7 +78,7 @@
                   <p class="card-footer-item">
                       <span id="prodremove">
                         <button type="button" data-product={{product.id}} data-action="remove" class="button is-danger is-light updatecart"> 
-                          <i class="fa fa-comment" aria-hidden="true"></i> Remove
+                          <i class="fa fa-trash" aria-hidden="true"></i> Remove
                         </button>
                       </span>
                     </p>

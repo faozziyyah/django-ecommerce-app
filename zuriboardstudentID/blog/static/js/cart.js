@@ -5,8 +5,6 @@ for (i = 0; i < addtocartbtns.length; i++) {
         var productId = this.dataset.product
         var action = this.dataset.action
 
-        
-        console.log('USER:', user)
         if (user == 'AnonymousUser') {
             alert('User is not authenticated')
         } else {

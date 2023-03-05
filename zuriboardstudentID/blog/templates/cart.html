@@ -15,12 +15,22 @@
         <div class="level-item has-text-centered">
           <div>
             <p class="heading has-text-weight-bold">Total price</p>
-            <p class="title"># {{order.get_cart_total}}</p>
+            <p class="title">$ {{order.get_cart_total}}</p>
           </div>
         </div>
-        <div class="level-item has-text-centered has-text-weight-bold">
-            <a class="button is-link is-light" href="{% url 'checkout' %}">Checkout</a>
-            <a href="{% url 'delete-cart' order.id %}" class="button is-danger is-light"> Clear Cart
+        <div class="level-item has-text-centered has-text-weight-bold" style="display: flex; justify-content: space-around;">
+            <a class="button is-link is-light" href="{% url 'checkout' %}">
+              <span class="icon">
+                <i class="fa fa-shopping-cart"></i>
+              </span>
+              <span>Checkout</span>
+            </a>
+            <!--<a href="{% url 'delete-cart' order.id %}" class="button is-danger is-light"> Clear Cart </a> -->
+            <a href="{% url 'full_remove' order.id %}" class="button is-danger is-light">  
+              <span class="icon">
+                <i class="fa fa-trash"></i>
+              </span>
+              <span>Clear Cart</span>
             </a>
         </div>
       </nav>
@@ -45,7 +55,7 @@
                 </td>
 
                 <td>
-                    <p class="has-text-centered has-text-weight-medium tablep">#{{ item.product.price }}</p>
+                    <p class="has-text-centered has-text-weight-medium tablep">${{ item.product.price }}</p>
                 </td>
 
                 <td id="change-cart">
@@ -61,10 +71,7 @@
                 </td>
 
                 <td>
-                  <p class="has-text-centered has-text-weight-medium tablep">#{{item.get_total}}</p>               
-                  <a href="{% url 'delete-cart' order.id %}" class="button is-danger is-light"> 
-                    <i class="fa fa-comment" aria-hidden="true"></i> Delete
-                  </a>
+                  <p class="has-text-centered has-text-weight-medium tablep">${{item.get_total}}</p> 
                 </td>
             </tr>
             {% endfor %}

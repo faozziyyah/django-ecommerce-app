@@ -141,10 +141,13 @@ def cart(request):
     items = order.orderitem_set.all()
     cartItems = order.get_cart_items
 
-    context = {'items': items, 'order': order, 'cartItems': cartItems}
+    user_object = User.objects.get(username=request.user.username)
+    user_profile = Customer.objects.get(user=user_object)
+
+    context = {'items': items, 'order': order, 'cartItems': cartItems, 'user_profile': user_profile,}
     return render(request, 'cart.html', context)
 
-# delete post
+# delete item
 @login_required(login_url='login_user')
 def delete_cart(request, order_id):
     order = OrderItem.objects.get(pk=order_id)
@@ -152,13 +155,26 @@ def delete_cart(request, order_id):
 
     return redirect('cart')
 
+# Delete all items
+@login_required(login_url='login_user')
+def delete_cart(request, order_id):
+    order = Order.objects.get(pk=order_id)
+    order_items = OrderItem.objects.filter(order=order)
+    order_items.delete()
+
+    return redirect('cart')
+
+# checkout
 def checkout(request):
     customer = request.user.customer
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     items = order.orderitem_set.all()
     cartItems = order.get_cart_items
 
-    context = {'items': items, 'order': order, 'cartItems': cartItems}
+    user_object = User.objects.get(username=request.user.username)
+    user_profile = Customer.objects.get(user=user_object)
+
+    context = {'items': items, 'order': order, 'cartItems': cartItems, 'user_profile': user_profile,}
     return render(request, 'checkout.html', context)
 
 # profile page
@@ -174,7 +190,6 @@ def profile(request, pk):
         'user_profile': user_profile,
     }
     return render(request, 'profile.html', context)
-
 
 # settings
 @login_required(login_url='login_user')
@@ -205,7 +220,7 @@ def settings(request):
         return redirect('settings')
     return render(request, 'settings.html', {'user_profile': user_profile})
 
-
+#process order
 @login_required(login_url='login_user')
 def processOrder(request):
     transaction_id = datetime.now().timestamp()
@@ -276,9 +291,16 @@ def show_category(request, category_id):
     category = Category.objects.get(pk=category_id)
     category_products = Product.objects.filter(category__in=[category])
 
+    p = Paginator(Product.objects.filter(category__in=[category]), 2)
+    page = request.GET.get('page')
+    products = p.get_page(page)
+    nums = "a" * products.paginator.num_pages
+
+    user_object = User.objects.get(username=request.user.username)
+    user_profile = Customer.objects.get(user=user_object)
+
     context = {
-        'category_products': category_products,
-        'category': category,
+        'category_products': category_products, 'user_profile': user_profile,
+        'category': category, 'products': products, 'nums': nums,
     }
     return render(request, 'about.html', context)
-

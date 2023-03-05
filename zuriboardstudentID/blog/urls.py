@@ -17,4 +17,5 @@ urlpatterns = [
     path('like-product', views.like_product, name='like-product'),
     path('search_product', views.search_product, name='search-product'),
     path('show_category/<category_id>', views.show_category, name='show-category'),
+    path('full_remove/<order_id>', views.delete_cart, name='full_remove'),
 ]

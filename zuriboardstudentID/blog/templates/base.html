@@ -84,19 +84,7 @@
 
                     <div class="navbar-item">
                         <a href="{% url 'cart' %}" class="nava"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart </a>
-                        <p id="cattotal">{{ cartItems }}</p>
-                    </div>
-            
-                    <div class="navbar-item has-dropdown is-hoverable">    
-                        <a class="navbar-link"><i class="fa fa-info-circle" aria-hidden="true"></i> More </a>
-            
-                        <div class="navbar-dropdown">    
-                            <a class="navbar-item" href="{% url 'cart' %}"><i class="fa fa-info-circle" aria-hidden="true"></i> About </a>
-                            <a href="{% url 'cart' %}" class="navbar-item"> <i class="fa fa-address-card"></i> Contact </a>    
-                            <hr class="navbar-divider">    
-                            <a class="navbar-item"> Report an issue </a>
-                        </div>
-
+                        <p id="cattotal" style="margin-top: -1em;">{{ cartItems }}</p>
                     </div>
 
                 </div>
@@ -139,7 +127,7 @@
 
                                 <div class="navbar-item has-dropdown is-hoverable">    
                                     <a class="navbar-link">
-                                        <img src="{{index}}" class="header-avatar" style="width: 32px; height: 32px; border-radius: 100%; margin-left: 15px;">
+                                        <img src="{{user_profile.profileimg.url}}" class="header-avatar" style="width: 32px; height: 32px; border-radius: 100%; margin-left: 15px;">
                                     </a>
                         
                                     <div class="navbar-dropdown">

@@ -62,7 +62,7 @@
             <div class="level-item has-text-centered">
                 <div>
                   <p class="heading has-text-weight-bold">Total price</p>
-                  <p class="title"># {{order.get_cart_total}}</p>
+                  <p class="title">$ {{order.get_cart_total}}</p>
                 </div>
             </div>
 
@@ -92,7 +92,7 @@
                     </td>
     
                     <td>
-                        <p class="has-text-centered has-text-weight-medium">#{{ item.product.price }}</p>
+                        <p class="has-text-centered has-text-weight-medium">${{ item.product.price }}</p>
                     </td>
     
                     <td>
@@ -101,7 +101,7 @@
                     </td>
     
                     <td>
-                        <p class="has-text-centered has-text-weight-medium">#{{item.get_total}}</p>
+                        <p class="has-text-centered has-text-weight-medium">${{item.get_total}}</p>
                     </td>
                 </tr>
                 {% endfor %}
