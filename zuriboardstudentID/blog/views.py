@@ -285,6 +285,7 @@ def search_product(request):
         return render(request, 'search.html', {'searched': searched, 'products': products})
     else:
         return render(request, 'search.html', {})    
+    
 # show category
 def show_category(request, category_id):
     #user_profile = Profile.objects.get(user=request.user)
