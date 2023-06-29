@@ -23,13 +23,13 @@ full stack CRUD E-Commerce website built with HTML, Bulma CSS, and Django framew
 
 Users should be able to:
 
-- Add an item to cart.
+- Add an item to the cart.
 - View each item.
-- Update and clear cart.
-- Make payment with paypal.
-- View items categories.
+- Update and clear the cart.
+- Make payment with PayPal.
+- View item categories.
 - Login as a user and log out.
-- Remove item and like items in cart.
+- Remove items and like items in the cart.
 - Search for items in store.
 - View the optimal layout for the site depending on their device's screen size
 
